@@ -1,6 +1,6 @@
 package com.example.lotto.client;
 
-import com.example.lotto.HelloApplication;
+import com.example.lotto.LottoApplication;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,11 +14,11 @@ public class Client implements Runnable{
     private Socket clientSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    HelloApplication mainApp;
+    LottoApplication mainApp;
     String address;
 
 
-    public Client(HelloApplication mainApp, String address){
+    public Client(LottoApplication mainApp, String address){
 
         this.mainApp = mainApp;
         t = new Thread(this,"threadC");
