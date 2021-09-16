@@ -1,16 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.lotto.LottoController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.layout.GridPane?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<GridPane alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.example.lotto.LottoController">
+
+    <Button text="Generate"
+            onAction="#onGenerateButtonClick"
+            GridPane.columnIndex="0"
+            GridPane.rowIndex="0"
+            GridPane.columnSpan="3"
+    />
+
+    <Button text="Reset"
+            onAction="#onResetButtonClick"
+            GridPane.rowIndex="1"
+            GridPane.columnIndex="0"
+            GridPane.columnSpan="3"
+    />
+
+    <Label text="First"
+           GridPane.rowIndex="2"
+           GridPane.columnIndex="0"
+    />
+
+    <Label text="Second"
+           GridPane.rowIndex="2"
+           GridPane.columnIndex="1"
+    />
+
+    <Label text="Third"
+           GridPane.rowIndex="2"
+           GridPane.columnIndex="2"
+    />
+
+    <Label text="Fourth"
+           GridPane.rowIndex="2"
+           GridPane.columnIndex="3"
+    />
+
+    <Label text="Fifth"
+           GridPane.rowIndex="2"
+           GridPane.columnIndex="4"
+    />
+
+    <Label text="Sixth"
+           GridPane.rowIndex="2"
+           GridPane.columnIndex="5"
+    />
+</GridPane>
