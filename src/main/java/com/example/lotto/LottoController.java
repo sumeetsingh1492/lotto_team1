@@ -3,7 +3,7 @@ package com.example.lotto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class LottoController {
     @FXML
     private Label welcomeText;
 
