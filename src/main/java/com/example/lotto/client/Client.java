@@ -41,12 +41,6 @@ public class Client implements Runnable{
                     //checks if response is String
                     if (o instanceof String) {
                         String code = (String ) o;
-                        if(code.equals("1ready") || code.equals("2ready"))
-                        {
-
-                        }
-
-                        System.out.println("Result from server : "+ code);
 
                     }
 
@@ -55,16 +49,14 @@ public class Client implements Runnable{
                         String[] code = (String[] ) o;
 
                         //checks if it's the lotto code
-                        //if(code[0] == "lottoCodeResponse"){
+                        try {
+                            if(Integer.parseInt(code[0]) == 0){
 
-                            System.out.println("Result from server : "+ code[0]);
+                                mainApp.setLottoCode(code[1]);
 
-
-                            mainApp.setLottoCode(code[1]);
-
-                       // }
-
-
+                           }
+                        } catch (NumberFormatException e) {
+                        }
 
                     }
                 }
@@ -91,4 +83,16 @@ public class Client implements Runnable{
     }
 
 }
+
+
+/**response
+ *  code 0 = lotteryCodeResponse
+ *
+ *
+ *
+ * request
+ *
+ * code 0 = lotteryCodeRequest
+ *
+ * */
 

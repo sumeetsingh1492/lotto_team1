@@ -2,6 +2,8 @@ package com.example.lotto;
 
 import com.example.lotto.client.Client;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,8 @@ public class HelloApplication extends Application {
     private Client c;
 
     Label l;
+
+    Boolean canUpdateLabel = false;
 
     public String lottoCode = "Button not selected";
 
@@ -47,9 +51,29 @@ public class HelloApplication extends Application {
             {
                 requestLottoCode();
 
-                System.out.println("Code requested");
             }
         };
+
+        // background task
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                while (true) {
+                    Thread.sleep(30);
+                    Platform.runLater(() -> {
+                        if(canUpdateLabel) {
+
+                            l.setText(lottoCode);
+
+                            canUpdateLabel = false;
+
+                        }
+                    });
+                }
+            }
+        };
+        new Thread(task).start();
+
 
         // when button is pressed
         b.setOnAction(event);
@@ -82,18 +106,13 @@ public class HelloApplication extends Application {
 
         this.lottoCode = lottoCode;
 
-        System.out.println("The lotto code is: " + lottoCode);
-
-        l.setText(lottoCode);
-
-
-
+        canUpdateLabel = true;
 
     }
 
     public void requestLottoCode(){
 
-        c.sendMessage("requestLottoCode");
+        c.sendMessage("0");
 
     }
 

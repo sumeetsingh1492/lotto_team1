@@ -31,17 +31,18 @@ public class ServerRead implements Runnable {
 
                     String code = (String) o;
 
-                    server.printDebug(code);
+                    try {
+                        if(Integer.parseInt(code) == 0){
 
+                            String lottoCode = server.generateLottoCode();
 
-                    if(code == "requestLottoCode"){
+                            String[] response = {"0", lottoCode};
 
-                        String lottoCode = server.generateLottoCode();
+                            server.sendMessage(response);
 
-                        String[] response = {"lottoCodeResponse", lottoCode};
-
-                        server.sendMessage(response);
-
+                        }
+                    } catch (NumberFormatException e) {
+                    } catch (IOException e) {
                     }
 
                 }

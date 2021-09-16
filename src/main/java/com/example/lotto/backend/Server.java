@@ -45,8 +45,6 @@ public class Server{
 
         outOne.writeObject(code);
 
-        System.out.println(code);
-
     }
 
 
