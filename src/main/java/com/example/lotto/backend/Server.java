@@ -1,10 +1,7 @@
 package com.example.lotto.backend;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.io.*;
+import java.net.*;
 import java.util.Random;
 
 public class Server{
@@ -49,12 +46,30 @@ public class Server{
 
 
     //generate lotto code
-    public String generateLottoCode() {
+    public String generateLottoCode() throws IOException {
 
-        Random rand = new Random(); //instance of random class
-        int int_random = rand.nextInt(34);
+        /*Random rand = new Random(); //instance of random class
+        int int_random = rand.nextInt(34);*/
 
-        return String.valueOf(int_random);
+        URL url = new URL("http://www.randomnumberapi.com/api/v1.0/random?min=1&max=59&count=1");
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+
+        String response = "null";
+
+        if (conn.getResponseCode() == 200) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String strCurrentLine = "";
+            int i = 0;
+            while ((strCurrentLine = br.readLine()) != null) {
+                response = strCurrentLine;
+            }
+        }
+
+        conn.disconnect();
+
+
+
+        return (response.replace("[","")).replace("]","" );
     }
 
     public void printDebug(String code){

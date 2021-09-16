@@ -13,6 +13,9 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class LottoApplication extends Application {
 
@@ -22,7 +25,10 @@ public class LottoApplication extends Application {
 
     Boolean canUpdateLabel = false;
 
-    public String lottoCode = "Button not selected";
+    ArrayList<Integer> lottoCode_integer = new ArrayList<>();
+
+    public String[] lottoCode = new String[6];
+    public int code_counter = 0;
 
 
 
@@ -42,7 +48,7 @@ public class LottoApplication extends Application {
         TilePane r = new TilePane();
 
         // create a label
-        l = new Label(lottoCode);
+        l = new Label("Call the button");
 
         // action event
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
@@ -62,7 +68,9 @@ public class LottoApplication extends Application {
                     Platform.runLater(() -> {
                         if(canUpdateLabel) {
 
-                            l.setText(lottoCode);
+                            Collections.sort(lottoCode_integer);
+
+                            l.setText(String.valueOf(lottoCode_integer));
 
                             canUpdateLabel = false;
 
@@ -97,21 +105,42 @@ public class LottoApplication extends Application {
 
     }
 
-    public String getLottoCode() {
+    public String[] getLottoCode() {
         return lottoCode;
     }
 
     public void setLottoCode(String lottoCode) {
 
-        this.lottoCode = lottoCode;
+        if(Arrays.asList(this.lottoCode).contains(lottoCode)){
 
-        canUpdateLabel = true;
+            requestLottoCode();
+
+            System.out.println("A DUPLICATE YOU FOOL");
+
+        } else {
+
+            this.lottoCode[code_counter] = lottoCode;
+
+            lottoCode_integer.add(Integer.valueOf(lottoCode));
+
+            code_counter++;
+
+            canUpdateLabel = true;
+        }
 
     }
 
     public void requestLottoCode(){
 
-        c.sendMessage("0");
+        if(code_counter < 6) {
+            c.sendMessage("0");
+        }
+        else{
+            code_counter = 0;
+            lottoCode = new String[6];
+            lottoCode_integer.clear();
+            canUpdateLabel = true;
+        }
 
     }
 
