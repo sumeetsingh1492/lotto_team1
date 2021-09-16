@@ -4,50 +4,24 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
-          fx:controller="com.example.lotto.LottoController">
+<GridPane alignment="CENTER"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.example.lotto.LottoController"
+          id="grid">
 
     <Button text="Generate"
             onAction="#onGenerateButtonClick"
-            GridPane.columnIndex="0"
+            GridPane.columnIndex="1"
             GridPane.rowIndex="0"
             GridPane.columnSpan="3"
+            id="generateButton"
     />
 
     <Button text="Reset"
             onAction="#onResetButtonClick"
-            GridPane.rowIndex="1"
-            GridPane.columnIndex="0"
+            GridPane.columnIndex="4"
+            GridPane.rowIndex="0"
             GridPane.columnSpan="3"
-    />
-
-    <Label text="First"
-           GridPane.rowIndex="2"
-           GridPane.columnIndex="0"
-    />
-
-    <Label text="Second"
-           GridPane.rowIndex="2"
-           GridPane.columnIndex="1"
-    />
-
-    <Label text="Third"
-           GridPane.rowIndex="2"
-           GridPane.columnIndex="2"
-    />
-
-    <Label text="Fourth"
-           GridPane.rowIndex="2"
-           GridPane.columnIndex="3"
-    />
-
-    <Label text="Fifth"
-           GridPane.rowIndex="2"
-           GridPane.columnIndex="4"
-    />
-
-    <Label text="Sixth"
-           GridPane.rowIndex="2"
-           GridPane.columnIndex="5"
+            id="resetButton"
     />
 </GridPane>
