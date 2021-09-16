@@ -1,0 +1,94 @@
+package com.example.lotto.client;
+
+import com.example.lotto.HelloApplication;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Client implements Runnable{
+    int portNumber = 12345;
+    Thread t;
+    private Socket clientSocket;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
+    HelloApplication mainApp;
+    String address;
+
+
+    public Client(HelloApplication mainApp, String address){
+
+        this.mainApp = mainApp;
+        t = new Thread(this,"threadC");
+        t.start();
+        this.address = address;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                clientSocket = new Socket(address, portNumber);
+
+                out = new ObjectOutputStream(clientSocket.getOutputStream());
+                in = new ObjectInputStream((clientSocket.getInputStream()));
+
+                while (true) {
+                    Object o =  in.readObject();
+
+                    //checks if response is String
+                    if (o instanceof String) {
+                        String code = (String ) o;
+                        if(code.equals("1ready") || code.equals("2ready"))
+                        {
+
+                        }
+
+                        System.out.println("Result from server : "+ code);
+
+                    }
+
+                    //checks if response is Array of String
+                    if (o instanceof String[]) {
+                        String[] code = (String[] ) o;
+
+                        //checks if it's the lotto code
+                        //if(code[0] == "lottoCodeResponse"){
+
+                            System.out.println("Result from server : "+ code[0]);
+
+
+                            mainApp.setLottoCode(code[1]);
+
+                       // }
+
+
+
+                    }
+                }
+
+            } catch (UnknownHostException e) {
+                System.err.println("Host Unknown");
+            } catch (IOException e) {
+                System.err.println("I/O");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //used to sen message to the server
+    public synchronized void sendMessage(Object code){
+        try {
+
+            out.writeObject(code);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+
