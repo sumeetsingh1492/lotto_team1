@@ -47,9 +47,6 @@ public class ServerRead implements Runnable {
 
                 }
 
-
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
