@@ -113,7 +113,7 @@ public class LottoApplication extends Application {
 
         // add button
         gridPane.add(b, 0, 0);
-        gridPane.add(resetButton, 1, 0);
+        gridPane.add(b_r, 1, 0);
         gridPane.add(l, 0, 1);
         HBox wrapper = new HBox(8);
         wrapper.setAlignment(Pos.CENTER);
