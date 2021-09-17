@@ -2,6 +2,7 @@ package com.example.lotto.backend;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Server{
@@ -10,6 +11,9 @@ public class Server{
     int portNumber;
 
     private Socket playerOne;
+
+
+    private ArrayList<String> listCodes = new ArrayList<>();
 
 
     public ObjectOutputStream outOne, outTwo;
@@ -77,6 +81,34 @@ public class Server{
         System.out.println(code);
 
     }
+
+    public synchronized void addToCodesList(String value){
+
+        listCodes.add(value);
+
+    }
+
+    public synchronized String getCodesList(){
+
+        String god_list = "";
+
+        for (String itm: listCodes) {
+
+            god_list += (itm + "|");
+
+        }
+
+        return god_list;
+
+    }
+
+    public synchronized void resetCodesList(){
+
+        listCodes.clear();
+
+    }
+
+
 
     public static void main(String[] args){
         new Server();

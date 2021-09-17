@@ -55,6 +55,12 @@ public class Client implements Runnable{
                                 mainApp.setLottoCode(code[1]);
 
                            }
+
+                            if(Integer.parseInt(code[0]) == 2){
+
+                                System.out.println(code[1]);
+
+                            }
                         } catch (NumberFormatException e) {
                         }
 
@@ -88,11 +94,17 @@ public class Client implements Runnable{
 /**response
  *  code 0 = lotteryCodeResponse
  *
+ *  code 2 = getCodesListResponse
  *
  *
  * request
  *
  * code 0 = lotteryCodeRequest
+ *
+ *
+ * code 1 = storeValue
+ *
+ * code 2 = getCodesList
  *
  * */
 

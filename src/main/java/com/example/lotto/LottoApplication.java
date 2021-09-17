@@ -30,10 +30,17 @@ public class LottoApplication extends Application {
 
     Button b;
 
+    Button b_r;
+
+
+
     ArrayList<Integer> lottoCode_integer = new ArrayList<>();
 
     public String[] lottoCode = new String[6];
+
     public int code_counter = 0;
+
+    ArrayList<String> listCodes = new ArrayList<>();
 
 
 
@@ -49,6 +56,8 @@ public class LottoApplication extends Application {
         // create a button
         b = new Button("button");
 
+        b_r = new Button("reset");
+
         // create a stack pane
         GridPane gridPane = new GridPane();
 
@@ -61,6 +70,14 @@ public class LottoApplication extends Application {
             {
                 requestLottoCode();
 
+            }
+        };
+
+        // action event
+        EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
+                resetEverything();
             }
         };
 
@@ -88,12 +105,11 @@ public class LottoApplication extends Application {
         };
         new Thread(task).start();
 
+        //okay
 
         // when button is pressed
         b.setOnAction(event);
-
-        Button resetButton = new Button("Reset");
-        resetButton.setOnAction(actionEvent -> resetLottoCode());
+        b_r.setOnAction(event2);
 
         // add button
         gridPane.add(b, 0, 0);
@@ -135,13 +151,18 @@ public class LottoApplication extends Application {
 
         } else {
 
-            this.lottoCode[code_counter] = lottoCode;
+            if(code_counter < 6) {
+                this.lottoCode[code_counter] = lottoCode;
 
-            lottoCode_integer.add(Integer.valueOf(lottoCode));
+                lottoCode_integer.add(Integer.valueOf(lottoCode));
 
-            code_counter++;
+                code_counter++;
 
-            canUpdateLabel = true;
+                c.sendMessage("2");
+
+                canUpdateLabel = true;
+
+            }
         }
 
     }
@@ -149,6 +170,16 @@ public class LottoApplication extends Application {
     public void requestLottoCode(){
 
         if(code_counter >= 6) {
+
+            //sends value to be store inside database
+            Collections.sort(lottoCode_integer);
+
+            String value = String.valueOf(lottoCode_integer);
+
+            String new_value = ((value.replace("[","")).replace("]","" )).replace(" ","" );
+
+            c.sendMessage(new String[]{"1", new_value });
+
 
             code_counter = 0;
             lottoCode = new String[6];
@@ -160,16 +191,14 @@ public class LottoApplication extends Application {
         c.sendMessage("0");
 
         b.setDisable(true);
+
     }
 
-    public void resetLottoCode() {
-        // Check there are lotto numbers to reset
-        if (code_counter >= 1) {
-            code_counter = 0;
-            lottoCode = new String[6];
-            lottoCode_integer.clear();
-            canUpdateLabel = true;
-
-        }
+    public void resetEverything(){
+        c.sendMessage("3");
+        code_counter = 0;
+        lottoCode = new String[6];
+        lottoCode_integer.clear();
+        canUpdateLabel = true;
     }
 }
