@@ -12,11 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -53,10 +51,10 @@ public class LottoApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // create a stack pane
-        GridPane gridPane = new GridPane();
+        VBox gridPane = new VBox(12);
 
         // create a scene
-        Scene sc = new Scene(gridPane, 400, 200);
+        Scene sc = new Scene(gridPane, 350, 450);
 
         //sc.getStylesheets().add("com/example/lotto/styles.css");
 
@@ -67,16 +65,20 @@ public class LottoApplication extends Application {
         // set title for the stage
         stage.setTitle("Lotto Code For U");
 
+        HBox wrapper_btn = new HBox(12);
+
         // create a button
         b = new Button("Play");
+        b.setMinSize(80, 35);
         b.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
-
-
         b_r = new Button("Reset");
+        b_r.setMinSize(80, 35);
         b_r.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
+        wrapper_btn.getChildren().addAll(b, b_r);
 
+        wrapper_btn.setAlignment(Pos.CENTER);
 
         // create a label
         l = new Label("Call the button");
@@ -88,15 +90,22 @@ public class LottoApplication extends Application {
         labels.add(new Label("?"));
         labels.add(new Label("?"));
         labels.add(new Label("?"));
-        HBox wrapper = new HBox(8);
+        HBox wrapper = new HBox();
 
         for (Label label : labels) {
             label.setPadding(new Insets(10, 10, 10, 10));
             label.setStyle("-fx-border-color: black;\n" +
                     "    -fx-border-width: 4px;\n"+
                     "-fx-background-color: white;");
+
+            label.setMaxWidth(55);
+            label.setMinSize(55,55);
+            label.setAlignment(Pos.CENTER);
+            label.setMaxHeight(55);
             wrapper.getChildren().add(label);
         }
+
+        wrapper.setAlignment(Pos.CENTER);
 
 
         // action event
@@ -159,16 +168,21 @@ public class LottoApplication extends Application {
 
         //okay
 
+        gridPane.setMargin(wrapper_btn, new Insets(10, 3, 1.5, 3));
+
+
         // when button is pressed
         b.setOnAction(event);
         b_r.setOnAction(event2);
 
 
         // add button
-        gridPane.add(b, 0, 0);
-        gridPane.add(b_r, 1, 0);
-        gridPane.add(wrapper, 0, 1);
-        gridPane.add(listWrapper, 0, 2);
+        gridPane.getChildren().add(wrapper_btn);
+        gridPane.getChildren().add(wrapper);
+        gridPane.getChildren().add(listWrapper);
+
+        gridPane.setAlignment(Pos.CENTER);
+
 
 
 
