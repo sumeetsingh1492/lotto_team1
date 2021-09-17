@@ -89,9 +89,18 @@ public class LottoApplication extends Application {
         // when button is pressed
         b.setOnAction(event);
 
+        Button resetButton = new Button("Reset");
+        resetButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                resetLottoCode();
+            }
+        });
+
         // add button
         r.getChildren().add(b);
         r.getChildren().add(l);
+        r.getChildren().add(resetButton);
 
         // create a scene
         Scene sc = new Scene(r, 200, 200);
@@ -148,10 +157,15 @@ public class LottoApplication extends Application {
         c.sendMessage("0");
 
         b.setDisable(true);
-
-
-
-
     }
 
+    public void resetLottoCode() {
+        // Check there are lotto numbers to reset
+        if (code_counter >= 1) {
+            code_counter = 0;
+            lottoCode = new String[6];
+            lottoCode_integer.clear();
+            canUpdateLabel = true;
+        }
+    }
 }
