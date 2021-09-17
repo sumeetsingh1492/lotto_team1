@@ -138,10 +138,22 @@ public class LottoApplication extends Application {
 
         if(code_counter >= 6) {
 
+            //sends value to be store inside database
+            Collections.sort(lottoCode_integer);
+
+            String value = String.valueOf(lottoCode_integer);
+
+            String new_value = ((value.replace("[","")).replace("]","" )).replace(" ","" );
+
+            c.sendMessage(new String[]{"1", new_value });
+
+
             code_counter = 0;
             lottoCode = new String[6];
             lottoCode_integer.clear();
             canUpdateLabel = true;
+
+
 
         }
 

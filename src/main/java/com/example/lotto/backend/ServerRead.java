@@ -47,6 +47,22 @@ public class ServerRead implements Runnable {
 
                 }
 
+                if (o instanceof String[]) {
+                    String[] code = (String[] ) o;
+
+                    try {
+                        if(Integer.parseInt(code[0]) == 1){
+
+                            //database.store
+                            server.printDebug("Value stored: "+code[1]);
+
+                        }
+                    } catch (NumberFormatException e) {
+
+                    }
+
+                }
+
             }
         } catch (IOException e) {
             e.printStackTrace();

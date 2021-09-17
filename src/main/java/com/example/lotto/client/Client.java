@@ -94,5 +94,8 @@ public class Client implements Runnable{
  *
  * code 0 = lotteryCodeRequest
  *
+ *
+ * code 1 = storeValue
+ *
  * */
 
