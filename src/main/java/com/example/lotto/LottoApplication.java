@@ -25,6 +25,8 @@ public class LottoApplication extends Application {
 
     Boolean canUpdateLabel = false;
 
+    Button b;
+
     ArrayList<Integer> lottoCode_integer = new ArrayList<>();
 
     public String[] lottoCode = new String[6];
@@ -42,7 +44,7 @@ public class LottoApplication extends Application {
         stage.setTitle("creating buttons");
 
         // create a button
-        Button b = new Button("button");
+        b = new Button("button");
 
         // create a stack pane
         TilePane r = new TilePane();
@@ -73,6 +75,8 @@ public class LottoApplication extends Application {
                             l.setText(String.valueOf(lottoCode_integer));
 
                             canUpdateLabel = false;
+
+                            b.setDisable(false);
 
                         }
                     });
@@ -132,15 +136,21 @@ public class LottoApplication extends Application {
 
     public void requestLottoCode(){
 
-        if(code_counter < 6) {
-            c.sendMessage("0");
-        }
-        else{
+        if(code_counter >= 6) {
+
             code_counter = 0;
             lottoCode = new String[6];
             lottoCode_integer.clear();
             canUpdateLabel = true;
+
         }
+
+        c.sendMessage("0");
+
+        b.setDisable(true);
+
+
+
 
     }
 
