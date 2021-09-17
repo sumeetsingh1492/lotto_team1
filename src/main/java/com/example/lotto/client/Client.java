@@ -64,7 +64,7 @@ public class Client implements Runnable{
             } catch (UnknownHostException e) {
                 System.err.println("Host Unknown");
             } catch (IOException e) {
-                System.err.println("I/O");
+                System.err.println("I/O error, make sure the server is running");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

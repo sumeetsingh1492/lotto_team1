@@ -6,9 +6,12 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
@@ -47,7 +50,7 @@ public class LottoApplication extends Application {
         b = new Button("button");
 
         // create a stack pane
-        TilePane r = new TilePane();
+        GridPane gridPane = new GridPane();
 
         // create a label
         l = new Label("Call the button");
@@ -90,20 +93,20 @@ public class LottoApplication extends Application {
         b.setOnAction(event);
 
         Button resetButton = new Button("Reset");
-        resetButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                resetLottoCode();
-            }
-        });
+        resetButton.setOnAction(actionEvent -> resetLottoCode());
 
         // add button
-        r.getChildren().add(b);
-        r.getChildren().add(l);
-        r.getChildren().add(resetButton);
+        gridPane.add(b, 0, 0);
+        gridPane.add(resetButton, 1, 0);
+        gridPane.add(l, 0, 1);
+        HBox wrapper = new HBox(8);
+        wrapper.setAlignment(Pos.CENTER);
+        wrapper.getChildren().add(l);
+        wrapper.setPrefWidth(150);
+        gridPane.add(wrapper, 0, 1, 1, 6);
 
         // create a scene
-        Scene sc = new Scene(r, 200, 200);
+        Scene sc = new Scene(gridPane, 200, 200);
 
         // set the scene
         stage.setScene(sc);
@@ -166,6 +169,7 @@ public class LottoApplication extends Application {
             lottoCode = new String[6];
             lottoCode_integer.clear();
             canUpdateLabel = true;
+
         }
     }
 }
