@@ -102,6 +102,7 @@ public class LottoApplication extends Application {
         };
         new Thread(task).start();
 
+        //okay
 
         // when button is pressed
         b.setOnAction(event);
