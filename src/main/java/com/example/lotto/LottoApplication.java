@@ -123,13 +123,15 @@ public class LottoApplication extends Application {
 
         } else {
 
-            this.lottoCode[code_counter] = lottoCode;
+            if(code_counter < 6) {
+                this.lottoCode[code_counter] = lottoCode;
 
-            lottoCode_integer.add(Integer.valueOf(lottoCode));
+                lottoCode_integer.add(Integer.valueOf(lottoCode));
 
-            code_counter++;
+                code_counter++;
 
-            canUpdateLabel = true;
+                canUpdateLabel = true;
+            }
         }
 
     }
