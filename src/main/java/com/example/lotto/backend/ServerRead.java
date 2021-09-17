@@ -41,6 +41,27 @@ public class ServerRead implements Runnable {
                             server.sendMessage(response);
 
                         }
+
+                        if(Integer.parseInt(code) == 2){
+
+                            String lottoCodes = server.getCodesList();
+
+                            String[] response = {"2", lottoCodes};
+
+                            server.sendMessage(response);
+
+                        }
+
+                        if(Integer.parseInt(code) == 3){
+
+                            server.resetCodesList();
+
+                            server.sendMessage("3");
+
+
+                        }
+
+
                     } catch (NumberFormatException e) {
                     } catch (IOException e) {
                     }
@@ -54,7 +75,7 @@ public class ServerRead implements Runnable {
                         if(Integer.parseInt(code[0]) == 1){
 
                             //database.store
-                            server.printDebug("Value stored: "+code[1]);
+                            server.addToCodesList(code[1]);
 
                         }
                     } catch (NumberFormatException e) {

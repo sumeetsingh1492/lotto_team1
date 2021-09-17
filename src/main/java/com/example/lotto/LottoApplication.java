@@ -27,10 +27,17 @@ public class LottoApplication extends Application {
 
     Button b;
 
+    Button b_r;
+
+
+
     ArrayList<Integer> lottoCode_integer = new ArrayList<>();
 
     public String[] lottoCode = new String[6];
+
     public int code_counter = 0;
+
+    ArrayList<String> listCodes = new ArrayList<>();
 
 
 
@@ -46,6 +53,8 @@ public class LottoApplication extends Application {
         // create a button
         b = new Button("button");
 
+        b_r = new Button("reset");
+
         // create a stack pane
         TilePane r = new TilePane();
 
@@ -58,6 +67,14 @@ public class LottoApplication extends Application {
             {
                 requestLottoCode();
 
+            }
+        };
+
+        // action event
+        EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
+                resetEverything();
             }
         };
 
@@ -88,10 +105,13 @@ public class LottoApplication extends Application {
 
         // when button is pressed
         b.setOnAction(event);
+        b_r.setOnAction(event2);
 
         // add button
         r.getChildren().add(b);
         r.getChildren().add(l);
+        r.getChildren().add(b_r);
+
 
         // create a scene
         Scene sc = new Scene(r, 200, 200);
@@ -130,7 +150,10 @@ public class LottoApplication extends Application {
 
                 code_counter++;
 
+                c.sendMessage("2");
+
                 canUpdateLabel = true;
+
             }
         }
 
@@ -163,9 +186,14 @@ public class LottoApplication extends Application {
 
         b.setDisable(true);
 
+    }
 
-
-
+    public void resetEverything(){
+        c.sendMessage("3");
+        code_counter = 0;
+        lottoCode = new String[6];
+        lottoCode_integer.clear();
+        canUpdateLabel = true;
     }
 
 }
