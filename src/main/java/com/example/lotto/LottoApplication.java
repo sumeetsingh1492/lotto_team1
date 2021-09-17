@@ -12,10 +12,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -51,20 +52,31 @@ public class LottoApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        // create a stack pane
+        GridPane gridPane = new GridPane();
+
+        // create a scene
+        Scene sc = new Scene(gridPane, 400, 200);
+
+        //sc.getStylesheets().add("com/example/lotto/styles.css");
+
 
         //initiate client object
         c = new Client(this, "127.0.0.1");
 
         // set title for the stage
-        stage.setTitle("creating buttons");
+        stage.setTitle("Lotto Code For U");
 
         // create a button
-        b = new Button("button");
+        b = new Button("Play");
+        b.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
-        b_r = new Button("reset");
 
-        // create a stack pane
-        GridPane gridPane = new GridPane();
+
+        b_r = new Button("Reset");
+        b_r.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
+
+
 
         // create a label
         l = new Label("Call the button");
@@ -80,6 +92,9 @@ public class LottoApplication extends Application {
 
         for (Label label : labels) {
             label.setPadding(new Insets(10, 10, 10, 10));
+            label.setStyle("-fx-border-color: black;\n" +
+                    "    -fx-border-width: 4px;\n"+
+                    "-fx-background-color: white;");
             wrapper.getChildren().add(label);
         }
 
@@ -155,11 +170,24 @@ public class LottoApplication extends Application {
         gridPane.add(wrapper, 0, 1);
         gridPane.add(listWrapper, 0, 2);
 
-        // create a scene
-        Scene sc = new Scene(gridPane, 400, 200);
+
+
+        gridPane.setBackground(new Background(new BackgroundFill(Color.web("#eab759"), CornerRadii.EMPTY, Insets.EMPTY)));
+
 
         // set the scene
         stage.setScene(sc);
+
+
+        stage.setWidth(350);
+        stage.setHeight(450);
+
+        stage.setMaxWidth(350);
+        stage.setMaxHeight(450);
+
+        stage.setMaximized(false);
+
+
 
         stage.show();
 
