@@ -94,7 +94,7 @@ public class Server{
 
         for (String itm: listCodes) {
 
-            god_list += (itm + "|");
+            god_list += (itm + "X");
 
         }
 

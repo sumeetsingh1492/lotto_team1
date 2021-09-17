@@ -59,6 +59,7 @@ public class Client implements Runnable{
                             if(Integer.parseInt(code[0]) == 2){
 
                                 System.out.println(code[1]);
+                                mainApp.populateList(code[1]);
 
                             }
                         } catch (NumberFormatException e) {

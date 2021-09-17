@@ -6,13 +6,17 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,8 +36,6 @@ public class LottoApplication extends Application {
 
     Button b_r;
 
-
-
     ArrayList<Integer> lottoCode_integer = new ArrayList<>();
 
     public String[] lottoCode = new String[6];
@@ -42,6 +44,9 @@ public class LottoApplication extends Application {
 
     ArrayList<String> listCodes = new ArrayList<>();
 
+    ListView<Text> listWrapper = new ListView<>();
+
+    String[] results;
 
 
     @Override
@@ -64,10 +69,24 @@ public class LottoApplication extends Application {
         // create a label
         l = new Label("Call the button");
 
+        ArrayList<Label> labels = new ArrayList<>();
+        labels.add(new Label("?"));
+        labels.add(new Label("?"));
+        labels.add(new Label("?"));
+        labels.add(new Label("?"));
+        labels.add(new Label("?"));
+        labels.add(new Label("?"));
+        HBox wrapper = new HBox(8);
+
+        for (Label label : labels) {
+            label.setPadding(new Insets(10, 10, 10, 10));
+            wrapper.getChildren().add(label);
+        }
+
+
         // action event
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
+            public void handle(ActionEvent e) {
                 requestLottoCode();
 
             }
@@ -75,8 +94,7 @@ public class LottoApplication extends Application {
 
         // action event
         EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
+            public void handle(ActionEvent e) {
                 resetEverything();
             }
         };
@@ -88,12 +106,31 @@ public class LottoApplication extends Application {
                 while (true) {
                     Thread.sleep(30);
                     Platform.runLater(() -> {
-                        if(canUpdateLabel) {
+                        if (canUpdateLabel) {
 
                             Collections.sort(lottoCode_integer);
 
-                            l.setText(String.valueOf(lottoCode_integer));
+                            int index = lottoCode_integer.size() - 1;
 
+                            if (index >= 0) {
+                                Label label = labels.get(index);
+                            }
+                            for (Label item : labels) {
+                                item.setText("?");
+                            }
+
+                            for (int i = 0; i < lottoCode_integer.size(); i++) {
+                                Label label1 = labels.get(i);
+                                label1.setText(String.valueOf(lottoCode_integer.get(i)));
+                            }
+//                            l.setText(String.valueOf(lottoCode_integer));
+
+                            listWrapper.getItems().clear();
+
+                            for (String result : results) {
+                                Text text = new Text(result);
+                                listWrapper.getItems().add(text);
+                            }
                             canUpdateLabel = false;
 
                             b.setDisable(false);
@@ -111,18 +148,15 @@ public class LottoApplication extends Application {
         b.setOnAction(event);
         b_r.setOnAction(event2);
 
+
         // add button
         gridPane.add(b, 0, 0);
         gridPane.add(b_r, 1, 0);
-        gridPane.add(l, 0, 1);
-        HBox wrapper = new HBox(8);
-        wrapper.setAlignment(Pos.CENTER);
-        wrapper.getChildren().add(l);
-        wrapper.setPrefWidth(150);
-        gridPane.add(wrapper, 0, 1, 1, 6);
+        gridPane.add(wrapper, 0, 1);
+        gridPane.add(listWrapper, 0, 2);
 
         // create a scene
-        Scene sc = new Scene(gridPane, 200, 200);
+        Scene sc = new Scene(gridPane, 400, 200);
 
         // set the scene
         stage.setScene(sc);
@@ -143,7 +177,7 @@ public class LottoApplication extends Application {
 
     public void setLottoCode(String lottoCode) {
 
-        if(Arrays.asList(this.lottoCode).contains(lottoCode)){
+        if (Arrays.asList(this.lottoCode).contains(lottoCode)) {
 
             requestLottoCode();
 
@@ -151,7 +185,7 @@ public class LottoApplication extends Application {
 
         } else {
 
-            if(code_counter < 6) {
+            if (code_counter < 6) {
                 this.lottoCode[code_counter] = lottoCode;
 
                 lottoCode_integer.add(Integer.valueOf(lottoCode));
@@ -167,18 +201,18 @@ public class LottoApplication extends Application {
 
     }
 
-    public void requestLottoCode(){
+    public void requestLottoCode() {
 
-        if(code_counter >= 6) {
+        if (code_counter >= 6) {
 
             //sends value to be store inside database
             Collections.sort(lottoCode_integer);
 
             String value = String.valueOf(lottoCode_integer);
 
-            String new_value = ((value.replace("[","")).replace("]","" )).replace(" ","" );
+            String new_value = ((value.replace("[", "")).replace("]", "")).replace(" ", "");
 
-            c.sendMessage(new String[]{"1", new_value });
+            c.sendMessage(new String[]{"1", new_value});
 
 
             code_counter = 0;
@@ -194,11 +228,17 @@ public class LottoApplication extends Application {
 
     }
 
-    public void resetEverything(){
+    public void resetEverything() {
         c.sendMessage("3");
         code_counter = 0;
         lottoCode = new String[6];
         lottoCode_integer.clear();
+        results = new String[6];
         canUpdateLabel = true;
+
+    }
+
+    public void populateList(String content) {
+        results = content.split("X");
     }
 }
